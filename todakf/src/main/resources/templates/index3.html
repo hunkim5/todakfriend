@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="ko-KR">
+<head>
+<!doctype html>
+<title>토닥이친구</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="title" content="토닥이친구" />
+<meta name="description" content="안전하고 검증된 여성전용마사지! 할인이벤트중! 회원들의 이용후 찐 후기 공유! 여성전용커뮤니티! 관리사 프로필 및 실사 사진 제공! 토닥이친구" />
+<meta name="keywords" content="안전하고 검증된 여성전용마사지! 할인이벤트중! 회원들의 이용후 찐 후기 공유! 여성전용커뮤니티! 관리사 프로필 및 실사 사진 제공! 토닥이친구"/>
+<meta name="author" content="토닥이친구" />
+<meta name="robots" content="index,follow" />
+
+
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="토닥이친구" />
+<meta property="og:site_name" content="토닥이친구" />
+<meta property="og:description" content="토닥이친구은 검증된 여성전용마사지 업체만 제휴받습니다. 회원들의 이용후 찐 후기 공유! 관리사 프로필 및 실사 사진 제공! 여성전용커뮤니티! 여성전용마사지 NO.1 토닥이친구" />
+<meta property="og:image" content="https://todak-2.comweb/image/main_logo.png" />
+<meta property="og:url" content="https://todak-2.com" />
+
+<!-- Bootstrap CSS -->
+<link href="web/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="web/css/modals.css" rel="stylesheet" type="text/css" />
+<link href="web/css/main.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="web/image/icon/favicon-32x32.png" />
+
+<script src="/web/js/bootstrap.bundle.min.js"></script>
+<script src="/web/js/jquery-3.2.1.min.js"></script>
+<script src="/web/js/js.cookie.min.js"></script>
+<script src="/web/js/common.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180180994-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180180994-1');
+</script>
+<script src="//lite.payapp.kr/public/api/v2/payapp-lite.js"></script>
+<script src="/web/js/payment.js"></script>
+<script src="/web/js/profile.js"></script>
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+});
+
+</script>
+</head>
+
+
+<body>
+
+
+<!-- header -->
+
+
+
+
+<div class="container-xxl mb-3">
+<header>
+    <div class="d-flex py-2">
+
+        <!-- 메인 로고 -->
+        <div class="flex-grow-1">
+            <a class="text-dark text-decoration-none fw-bolder fs-5" href="javascript:goUrl('/')">토닥이친구</a>
+        </div>
+        <!-- 메인 로고 -->
+
+        <!-- 검색 -->
+        <div class="me-2">
+            <button type="button" onclick="goUrl('/search/board/list')" class="btn btn-sm btn-outline-secondary border-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- 검색 -->
+        <!-- 로그인 or 나의정보 -->
+                <div>
+                    <button type="button" class="btn btn-sm btn-info position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"></path>
+                        </svg>
+                        <span class="small fw-bold">나의정보</span>
+
+
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1
+                            <span class="visually-hidden">읽지 않은 메세지</span>
+                        </span>
+
+                    </button>
+                </div>
+
+
+
+        <!-- 로그인 or 나의정보 -->
+
+    </div>
+
+    <div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item " role="presentation">
+                <button type="button" class="btn dropdown-toggle nav-link fw-bold p-2 " id="home-tab" data-bs-toggle="dropdown" aria-expanded="false">제휴업체</button>
+                <ul class="dropdown-menu">
+                    <li class="border-bottom small"><a class="dropdown-item fw-bold" href="/shop/massage/list?area=seoul">여성전용마사지</a></li>
+                    <li class="border-bottom small"><a class="dropdown-item fw-bold" href="/shop/bar/list?area=seoul">여성전용BAR</a></li>
+                    <li class="border-bottom small"><a class="dropdown-item fw-bold" href="/shop/hobba/list?area=seoul">호빠</a></li>
+                    <li class="border-bottom small"><a class="dropdown-item fw-bold" href="/shop/waxing/list?area=seoul">왁싱</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold p-2 " id="profile-tab" onclick="goUrl('/community/free/list')">커뮤니티</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold p-2 " id="profile-tab" onclick="goUrl('/ranking/newJoin/list')">랭킹</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold p-2 " id="contact-tab" onclick="goUrl('/customer/notice/list')">고객센터</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold p-2 " id="profile-tab" onclick="goUrl('/job/company/list')">구인</button>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- 해더 중 메뉴 -->
+
+
+
+    <!-- 해더 중 메뉴 -->
+
+
+</header>
+</div>
+
+
+    <!-- 오른쪽 나의정보 드롭메뉴 -->
+<div class="offcanvas offcanvas-end" style="width: 250px;" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold" id="offcanvasNavbarLabel">나의정보</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="p-3 border-bottom">
+        <a href="javascript:void(0);" onclick="goUrl('/profile/member/main?memberId=hunkim80')" class="d-flex align-items-center text-decoration-none text-primary small mb-3" >
+            <img id="right_profile_poto"src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle me-1" />
+            <span class="badge small lev0 me-1">0</span>
+            <span class="me-1">
+
+
+                    <i class="bi bi-gender-male text-primary" style="margin-left: -2px; margin-right: -2px;"></i>
+
+
+            </span>
+            <strong>hunkim80</strong>
+        </a>
+
+
+
+        <p class="fw-bold">
+                       무료회원
+        </p>
+        <p class="mb-1 fw-bold small">현재 경험치 <a href="javascript:void(0);" onclick="goUrl('/point/levelList')" class="text-primary">0</a></p>
+        <div class="progress" style="height: 5px;">
+            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <p class="mt-1 mb-0 fw-bold small">다음 레벨까지 <a href="javascript:void(0);" onclick="goUrl('/point/eperienceHistory')" class="text-primary">0</a> 경험치 남음</p>
+
+
+
+    </div>
+    <div class="list-group list-group-flush fw-bold small">
+
+        <a href="javascript:void(0);" onclick="goUrl('/myPage/reMessage/list')" class="list-group-item list-group-item-action position-relative"><i class="bi bi-bell align-bottom me-3"></i>알림
+
+            <span class="badge bg-danger align-text-top">1</span>
+
+        </a>
+        <a href="javascript:void(0);" onclick="goUrl('/myPage/board/list')" class="list-group-item list-group-item-action"><i class="bi bi-chat-square-text align-bottom me-3"></i>나의 글</a>
+        <a href="javascript:void(0);" onclick="goUrl('/myPage/oneOnone/list')" class="list-group-item list-group-item-action"><i class="bi bi-quora align-bottom me-3"></i>1:1문의</a>
+        <a href="javascript:void(0);" onclick="goUrl('/myPage/police/list')" class="list-group-item list-group-item-action"><i class="bi bi-exclamation-octagon align-bottom me-3"></i>신고하기</a>
+        <a href="javascript:void(0);" onclick="goUrl('/myPage/memberOut/page')" class="list-group-item list-group-item-action"><i class="bi bi-person-x align-bottom me-3"></i>회원탈퇴</a>
+
+        <a href="javascript:logout();" class="list-group-item list-group-item-action border-bottom"><i class="bi bi-power align-bottom me-3"></i>로그아웃</a>
+    </div>
+
+</div>
+    <!-- 오른쪽 나의정보 드롭메뉴 -->
+
+
+
+
+
+
+<!-- header -->
+
+
+
+<main class="container-xxl">
+
+
+    <div class="text-center bbb">
+        <!-- <img src="web/image/banner/main/1300x300.jpg" class="img-fluid"  alt="관리사 사진 보러들어오세요" /> -->
+        <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" width="700" height="175">
+<!-- 배경 직사각형 -->
+<rect x="0" y="0" width="800" height="200" rx="25" ry="25" fill="#8ecae6" />
+
+<!-- 장식 요소 - 물결 패턴 -->
+<path d="M0,160 Q50,130 100,160 Q150,190 200,160 Q250,130 300,160 Q350,190 400,160 Q450,130 500,160 Q550,190 600,160 Q650,130 700,160 Q750,190 800,160"
+stroke="#219ebc" stroke-width="10" fill="none" />
+
+<!-- 마사지 아이콘 -->
+<circle cx="120" cy="85" r="35" fill="#ffb703" />
+<path d="M100,85 Q120,55 140,85 Q120,115 100,85" fill="#fb8500" />
+
+<!-- 손 아이콘 -->
+<path d="M680,85 C665,70 645,70 635,85 C625,100 640,115 655,110 C670,105 690,105 680,85" fill="#fb8500" />
+
+<!-- 샵 이름 -->
+<text x="400" y="100" font-family="Arial, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" fill="#023047">힐힐링타임</text>
+</svg>
+    </div>
+
+    <h2 class="mt-5 fw-normal text-center">여성전용마사지<a href="javascript:goUrl('/shop/massage/list');"><i class="bi bi-plus-lg float-end"></i></a></h2>
+    <!-- 업체 목록 -->
+    <div class="row m-1" >
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/ting33/2024/12/21/af9fb142-6bc6-4ba6-b5ed-6d5a91d50fb9_제목을-입력해주세요_.gif" class="card-img-top" alt="◤압구정◢플러팅❄️◕‿◕❄️❤️핫 플레이스❤️⭐24시⏰꧁서울,인천,경기no.1재방률+만족도1등꧁██▓▒░⎝⎝⎝⎝⎝❤️HIGHEND CLASS❤️외모상위1% ❤️마인드갑 ❤️최고의S.V❤❤✅빠른출장 ✅100%후불제 ⎝ ❤️☑️(카톡 ting33)☑️❤️ ⎝ █████████████████████████  ⭐⭐✅동반할인2만원씩, 신규 선착순할인이벤트!✅⭐⭐" onclick="goUrl('/shop/massage/detail?no=1831&area=seoul')"  style="cursor: pointer; max-width:400px; max-height:300px;  height: 121.36px; width: 100%;"  />
+
+                                <div class="position-absolute top-0 end-0 pe-1">
+                                    <span class="badge bg-danger blink">관리사 사진 보기</span>
+                                </div>
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="upload/todak2/fornt/ting33/2024/12/12/47015cf7-fb47-4d27-b07e-51988f984c6a_프로필배너.png" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span class="profile_nickName" memberId="ting33" data-bs-toggle="popover">플러팅</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/yms937/2023/07/29/a0bc17f9-1fe0-4f08-9bc4-a1bf8135fed8_여성전용 블라썸 테라피.png" class="card-img-top" alt="💖프리미엄💖부산.경남.울산.김해.양산.창원.진영💖 여성전용출장테라피 💖블라썸테라피" onclick="goUrl('/shop/massage/detail?no=1683&area=gyeongnam')"  style="cursor: pointer; max-width:400px; max-height:300px;  height: 121.36px; width: 100%;"  />
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span class="profile_nickName" memberId="yms937" data-bs-toggle="popover">BLOSSOM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/dudgns/2024/12/20/23f97729-63ae-4add-aea2-55fb49fe684c_1734625811595.gif" class="card-img-top" alt="❤️ 아르떼 테라피 ❤️  최상의 관리 20-30대 훈남들🥰 200%실사제공 🍏카톡Arte7777🍏 서울 경기 인천 24시 문의가능🍎 후회없는 선택! 아르떼" onclick="goUrl('/shop/massage/detail?no=1898&area=seoul')"  style="cursor: pointer; max-width:400px; max-height:300px;  height: 121.36px; width: 100%;"  />
+
+                                <div class="position-absolute top-0 end-0 pe-1">
+                                    <span class="badge bg-danger blink">관리사 사진 보기</span>
+                                </div>
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span class="profile_nickName" memberId="dudgns" data-bs-toggle="popover">아르떼7777</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/sd5249/2025/04/29/dd4b8653-9557-4208-8cfc-2b0dc4d91109_제목을-입력해주세요_-001.png" class="card-img-top" alt="울산전지역❣블루스웨디시❣사이즈no.1✅프리미엄 여성전용마사지 🚫개인정보 유출 No! 💪20~30대 훈남관리사 🟨 카톡 bluesw00 🟨 텔레 @BLUEswds 24시간문의👌" onclick="goUrl('/shop/massage/detail?no=1934&area=gyeongnam')"  style="cursor: pointer; max-width:400px; max-height:300px;  height: 121.36px; width: 100%;"  />
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span class="profile_nickName" memberId="sd5249" data-bs-toggle="popover">BLUE테라피</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/rudvk3/2024/07/17/resize_98f2859e-0818-44c5-99b2-5eb134bf0fc7_광고111.png" class="card-img-top" alt="력셔리 토닥이는? 🟥🟧🟨🟩🟦🟪 관리사 (30분이내)도착가능!  🟥🟧🟨🟩🟦🟪 력셔리 🟥🟧🟨🟩🟦🟪 절대 아무나 보내드리지 않겠습니다. " onclick="goUrl('/shop/massage/detail?no=1869&area=gyeongnam')"  style="cursor: pointer; max-width:400px; max-height:300px;  height: 121.36px; width: 100%;"  />
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span class="profile_nickName" memberId="rudvk3" data-bs-toggle="popover">럭셔리</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/ksb4345/2023/05/23/resize_16180ca1-191b-4b5f-bcc9-b5ad13e50eee_썸네일.jpg" class="card-img-top" alt="🚩💲슈가테라피 신뢰도1위 업체👉❤️신규회원 30%할인 이벤트💰고품격 프리미엄 여성전용마사지 🚫개인정보 유출No! 🌙✨ 카톡/라인 : yss5882 👨 20~30대 훈남관리사 실사 초이스가능 💖💖 명품 고객관리 💎💎 서울.경기.인천 24시간 💎💎 " onclick="goUrl('/shop/massage/detail?no=1677&area=seoul')"  style="cursor: pointer; max-width:400px; max-height:300px;  height: 121.36px; width: 100%;"  />
+                                <div class="position-absolute top-0 end-0 pe-1">
+                                    <span class="badge bg-danger blink">관리사 사진 보기</span>
+                                </div>
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span class="profile_nickName" memberId="ksb4345" data-bs-toggle="popover">슈가테라피</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <h2 class="mt-5 fw-normal text-center">왁싱<a href="javascript:goUrl('/shop/waxing/list');"><i class="bi bi-plus-lg float-end"></i></a></h2>
+    <div class="row m-1" >
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="upload/todak2/fornt/bellomin/2025/04/24/2e6c3734-8b40-4da1-b060-5aef2b5e8d8f_1739881896546.jpg" class="card-img-top" alt="남쌤.부산1인샵[Bello] 프라이빗한 왁싱전문샵" onclick="goUrl('/shop/waxing/detail?no=1931&area=seoul')" style="cursor: pointer;" />
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span>BELLO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-1">
+                <div class="card small">
+                    <img src="web/image/shop2/zam.gif" class="card-img-top" alt="부평역[누디왁싱]■왁싱전문■회원이벤트■ 남자왁서 근무중" onclick="goUrl('/shop/waxing/detail?no=1517&area=seoul')" style="cursor: pointer;" />
+                    <div class="p-1">
+                        <div class="">
+                            <div class="text-primary">
+                                <span class="badge levT me-1">T</span>
+                                <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                                <span>부평누디왁싱</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <!-- 제휴업체 목록 -->
+
+    <h2 class="mt-5 fw-normal text-center">호빠<a href="javascript:goUrl('/shop/hobba/list');"><i class="bi bi-plus-lg float-end"></i></a></h2>
+    <!-- 업체 목록 -->
+    <div class="row mt-3">
+
+    <div class="col-md-6" >
+        <ul class="list-group">
+          <li class="list-group-item p-1 mb-2" onclick="goUrl('/shop/hobba/detail?no=1791&area=gyeongnam')" style="cursor: pointer;">
+              <div class="d-flex">
+                  <div class="me-2">
+                      <img src="upload/todak2/fornt/jj1892/2023/10/10/22df7dd2-407d-42bd-9681-3d2b5ae32f9c_선수 구함2.jpg" class="rounded" style="width: 80px; height: 60px;" alt="퀄리티금자형">
+                  </div>
+                  <div class="small fw-bold">
+                      <p class="mb-0 fw-bold">퀄리티금자형</p>
+                      <p class="mb-0 small">부산 ❤️⭐️❤️퀄리티 ⭐️❤️⭐️돈벌사람만  긴말ㄴ ㄴ</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-6" >
+        <ul class="list-group">
+          <li class="list-group-item p-1 mb-2" onclick="goUrl('/shop/hobba/detail?no=1790&area=seoul')" style="cursor: pointer;">
+              <div class="d-flex">
+                  <div class="me-2">
+                      <img src="upload/todak2/fornt/tokyo3404/2023/10/08/45682536-2cfe-4a15-99a4-fe80f13ca7fd_어겡ㄴ.png" class="rounded" style="width: 80px; height: 60px;" alt="강남어게인">
+                  </div>
+                  <div class="small fw-bold">
+                      <p class="mb-0 fw-bold">강남어게인</p>
+                      <p class="mb-0 small">❤️❤️어게인 호빠 절대 총 안 쏘고 정직하게 오픈하고 장사합니다 010.4655.4249❤️❤️</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-6" >
+        <ul class="list-group">
+          <li class="list-group-item p-1 mb-2" onclick="goUrl('/shop/hobba/detail?no=1734&area=seoul')" style="cursor: pointer;">
+              <div class="d-flex">
+                  <div class="me-2">
+                      <img src="upload/todak2/fornt/kyuk8293/2023/10/06/resize_a56dd4b7-1131-48c1-8728-b4807ba0849d_신촌호빠 홍대호빠 종로호빠 마포호빠 서울호빠 서대문호빠 영등포호빠 강서호빠 이태원호빠 강남.jpg" class="rounded" style="width: 80px; height: 60px;" alt="현상태">
+                  </div>
+                  <div class="small fw-bold">
+                      <p class="mb-0 fw-bold">현상태</p>
+                      <p class="mb-0 small">홍대호빠 신촌호빠 OlO.7797.1187 서울호빠 문의주세요</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-6" >
+        <ul class="list-group">
+          <li class="list-group-item p-1 mb-2" onclick="goUrl('/shop/hobba/detail?no=1743&area=seoul')" style="cursor: pointer;">
+              <div class="d-flex">
+                  <div class="me-2">
+                      <img src="upload/todak2/fornt/dlrpejr/2023/10/06/eb19360b-935b-44f4-98a0-5283911a2dec_ac72e335947b6ecd2bc67387e6eb82b7.gif" class="rounded" style="width: 80px; height: 60px;" alt="G2철수실장">
+                  </div>
+                  <div class="small fw-bold">
+                      <p class="mb-0 fw-bold">G2철수실장</p>
+                      <p class="mb-0 small">종로호스트바 선수모집</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-6" >
+        <ul class="list-group">
+          <li class="list-group-item p-1 mb-2" onclick="goUrl('/shop/hobba/detail?no=1744&area=gyeongnam')" style="cursor: pointer;">
+              <div class="d-flex">
+                  <div class="me-2">
+                      <img src="upload/todak2/fornt/jj1892/2023/10/06/ab21db2b-c090-4df8-a8c6-1bb828da7d4c_1696590003572.jpg" class="rounded" style="width: 80px; height: 60px;" alt="퀄리티금자형">
+                  </div>
+                  <div class="small fw-bold">
+                      <p class="mb-0 fw-bold">퀄리티금자형</p>
+                      <p class="mb-0 small">부산 ❤️호스트bar ❤️퀄리티 ❤️스탭 구합니다</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-6" >
+        <ul class="list-group">
+          <li class="list-group-item p-1 mb-2" onclick="goUrl('/shop/hobba/detail?no=1742&area=seoul')" style="cursor: pointer;">
+              <div class="d-flex">
+                  <div class="me-2">
+                      <img src="upload/todak2/fornt/dlrpejr/2023/10/06/8ce55ee2-7310-43e4-aa13-9384939d8995_ac72e335947b6ecd2bc67387e6eb82b7.gif" class="rounded" style="width: 80px; height: 60px;" alt="G2철수실장">
+                  </div>
+                  <div class="small fw-bold">
+                      <p class="mb-0 fw-bold">G2철수실장</p>
+                      <p class="mb-0 small">극강사이즈 훈남집합소 종로호스트바</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+
+    </div>
+
+    </div>
+    <!-- 제휴업체 목록 -->
+
+    <div class="row mt-5">
+        <div class="col-md-6 mb-5" >
+        <h3 class="fw-normal text-center mb-2">커뮤니티<a href="javascript:goUrl('/community/free/list');"><i class="bi bi-plus-lg float-end"></i></a></h3>
+        <ul class="list-group small fw-bold">
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2">
+                    <div>
+                        <p class="mb-0 d-flex" style="cursor: pointer;" >
+                            <span class="flex-grow-1" onclick="goDetail('community','free','30706','','0','0','as0547','Y')">
+                                또 부르고 싶은 관리사가 있는데 이름이 기억이 안 난다..
+                                <span class="text-danger">+0</span>
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                            <span class="badge lev0">2</span>
+                            <span>
+                                    <i class="bi bi-gender-female text-danger" style="margin-left: -2px; margin-right: -2px;"></i>
+                            </span>
+                            <span class="align-middle text-primary profile_nickName" memberId="as0547" data-bs-toggle="popover" >토닥토다다닭</span>
+                            <span>|</span>
+                            <span class="align-middle text-secondary fw-normal">05/01</span>
+                            <span class="float-end fw-normal pt-1 small">조회 : <strong>167</strong>&nbsp;&nbsp;추천 : <strong>0</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2">
+                    <div>
+                        <p class="mb-0 d-flex" style="cursor: pointer;" >
+
+                            <span class="flex-grow-1" onclick="goDetail('community','free','30699','','0','0','shin12','Y')">
+                                새로운업체궁금
+                                <span class="text-danger">+0</span>
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <span><img src="upload/todak2/fornt/shin12/2024/03/20/resize_7a570cf8-9d71-4215-9b35-9621256f1363_Screenshot_20230603_153735_KakaoTalk.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                            <span class="badge lev30">37</span>
+                            <span>
+
+                                    <i class="bi bi-gender-female text-danger" style="margin-left: -2px; margin-right: -2px;"></i>
+
+
+
+                            </span>
+                            <span class="align-middle text-primary profile_nickName" memberId="shin12" data-bs-toggle="popover" >쵸코우유</span>
+                            <span>|</span>
+                            <span class="align-middle text-secondary fw-normal">04/29</span>
+                            <span class="float-end fw-normal pt-1 small">조회 : <strong>198</strong>&nbsp;&nbsp;추천 : <strong>0</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2">
+                    <div>
+                        <p class="mb-0 d-flex" style="cursor: pointer;" >
+
+                            <span class="flex-grow-1" onclick="goDetail('community','free','30695','','0','0','unee09','Y')">
+                                서울 첫토닥이 추천부탁드립니다8_8
+                                <span class="text-danger">+0</span>
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                            <span class="badge lev0">0</span>
+                            <span>
+
+                                    <i class="bi bi-gender-female text-danger" style="margin-left: -2px; margin-right: -2px;"></i>
+
+
+
+                            </span>
+                            <span class="align-middle text-primary profile_nickName" memberId="unee09" data-bs-toggle="popover" >바이올렛</span>
+                            <span>|</span>
+                            <span class="align-middle text-secondary fw-normal">04/28</span>
+                            <span class="float-end fw-normal pt-1 small">조회 : <strong>179</strong>&nbsp;&nbsp;추천 : <strong>0</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2">
+                    <div>
+                        <p class="mb-0 d-flex" style="cursor: pointer;" >
+
+                            <span class="flex-grow-1" onclick="goDetail('community','review','30694','','0','0','da3999','Y')">
+                                [플러팅]&nbsp;플러팅 연우님 후기👍
+                                <span class="text-danger">+6</span>
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                            <span class="badge lev10">15</span>
+                            <span>
+
+                                    <i class="bi bi-gender-female text-danger" style="margin-left: -2px; margin-right: -2px;"></i>
+
+
+
+                            </span>
+                            <span class="align-middle text-primary profile_nickName" memberId="da3999" data-bs-toggle="popover" >아라리가어카</span>
+                            <span>|</span>
+                            <span class="align-middle text-secondary fw-normal">04/27</span>
+                            <span class="float-end fw-normal pt-1 small">조회 : <strong>319</strong>&nbsp;&nbsp;추천 : <strong>6</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2">
+                    <div>
+                        <p class="mb-0 d-flex" style="cursor: pointer;" >
+
+                            <span class="flex-grow-1" onclick="goDetail('community','review','30685','','0','0','mjy6985','Y')">
+                                [주주]&nbsp;손에 손잡고 도건
+                                <span class="text-danger">+0</span>
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                            <span class="badge lev0">7</span>
+                            <span>
+
+                                    <i class="bi bi-gender-female text-danger" style="margin-left: -2px; margin-right: -2px;"></i>
+
+
+
+                            </span>
+                            <span class="align-middle text-primary profile_nickName" memberId="mjy6985" data-bs-toggle="popover" >블루록</span>
+                            <span>|</span>
+                            <span class="align-middle text-secondary fw-normal">04/26</span>
+                            <span class="float-end fw-normal pt-1 small">조회 : <strong>169</strong>&nbsp;&nbsp;추천 : <strong>8</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2">
+                    <div>
+                        <p class="mb-0 d-flex" style="cursor: pointer;" >
+
+                            <span class="flex-grow-1" onclick="goDetail('community','review','30684','','0','0','mjy6985','Y')">
+                                [cherish]&nbsp;잘생긴 지호
+                                <span class="text-danger">+0</span>
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <span><img src="web/image/profile_poto.jpg" alt="나의사진" width="25" height="25" class="rounded-circle" /></span>
+                            <span class="badge lev0">7</span>
+                            <span>
+
+                                    <i class="bi bi-gender-female text-danger" style="margin-left: -2px; margin-right: -2px;"></i>
+
+
+
+                            </span>
+                            <span class="align-middle text-primary profile_nickName" memberId="mjy6985" data-bs-toggle="popover" >블루록</span>
+                            <span>|</span>
+                            <span class="align-middle text-secondary fw-normal">04/26</span>
+                            <span class="float-end fw-normal pt-1 small">조회 : <strong>167</strong>&nbsp;&nbsp;추천 : <strong>9</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+        </ul>
+        </div>
+        <div class="col-md-6">
+        <h3 class="fw-normal text-center mb-2">공지사항<a href="javascript:goUrl('customer/notice/list');"><i class="bi bi-plus-lg float-end"></i></a></h3>
+        <ul class="list-group small fw-bold">
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2" onclick="goUrl('/customer/notice/detail?no=30353&page=')" style="cursor: pointer;">
+                    <div>
+                        <p class="mb-0"><span>서버 점검 예정 [2월 10일 (월) 오후 13:00~15:00]</span></p>
+                        <p class="mb-0"><span class="badge levM">M</span>&nbsp;<span class="text-primary">관리자</span>&nbsp;|&nbsp;
+                            <span class="text-secondary fw-normal">02/05</span>
+                            <span class="float-end fw-normal small">조회 : <strong>58</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2" onclick="goUrl('/customer/notice/detail?no=29172&page=')" style="cursor: pointer;">
+                    <div>
+                        <p class="mb-0"><span>단톡방 사용에 대한 운영진 입장</span></p>
+                        <p class="mb-0"><span class="badge levM">M</span>&nbsp;<span class="text-primary">관리자</span>&nbsp;|&nbsp;
+                            <span class="text-secondary fw-normal">06/30</span>
+                            <span class="float-end fw-normal small">조회 : <strong>1176</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2" onclick="goUrl('/customer/notice/detail?no=29171&page=')" style="cursor: pointer;">
+                    <div>
+                        <p class="mb-0"><span>계정 공유에 대한 경고 안내</span></p>
+                        <p class="mb-0"><span class="badge levM">M</span>&nbsp;<span class="text-primary">관리자</span>&nbsp;|&nbsp;
+                            <span class="text-secondary fw-normal">06/30</span>
+                            <span class="float-end fw-normal small">조회 : <strong>479</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2" onclick="goUrl('/customer/notice/detail?no=27908&page=')" style="cursor: pointer;">
+                    <div>
+                        <p class="mb-0"><span>🎉 새해 복 많이 받으세요! 🐉</span></p>
+                        <p class="mb-0"><span class="badge levM">M</span>&nbsp;<span class="text-primary">관리자</span>&nbsp;|&nbsp;
+                            <span class="text-secondary fw-normal">02/09</span>
+                            <span class="float-end fw-normal small">조회 : <strong>346</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2" onclick="goUrl('/customer/notice/detail?no=27310&page=')" style="cursor: pointer;">
+                    <div>
+                        <p class="mb-0"><span>대화하기(쪽지)기능 업데이트 안내</span></p>
+                        <p class="mb-0"><span class="badge levM">M</span>&nbsp;<span class="text-primary">관리자</span>&nbsp;|&nbsp;
+                            <span class="text-secondary fw-normal">10/27</span>
+                            <span class="float-end fw-normal small">조회 : <strong>540</strong></span>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="list-group-item border-start-0 border-end-0 px-0 py-2" onclick="goUrl('/customer/notice/detail?no=27253&page=')" style="cursor: pointer;">
+                    <div>
+                        <p class="mb-0"><span>서버 점검 예정 [10월 17일 (화) 오전 10:00~13:00]</span></p>
+                        <p class="mb-0"><span class="badge levM">M</span>&nbsp;<span class="text-primary">관리자</span>&nbsp;|&nbsp;
+                            <span class="text-secondary fw-normal">10/16</span>
+                            <span class="float-end fw-normal small">조회 : <strong>152</strong></span>
+                        </p>
+                    </div>
+                </li>
+        </ul>
+        </div>
+    </div>
+</main>
+<!-- footer S-->
+<footer class="py-3 px-2 mt-5 text-center small" style="background-color: #dadbdd;">
+
+    <div class="position-absolute" id="div_load_image" style="display: none; z-index: 9999">
+        <img src="web/image/icon/loding.gif" style="width: 70px;">
+    </div>
+
+    <div class="small">
+        <p class="mb-0 fw-bold">토닥이친구은 서비스 정보중개자로서,</p>
+        <p class="mb-0 fw-bold">서비스 제공의 당사가 아니라는 사실을 고지하며,</p>
+        <p class="mb-0 fw-bold text-primary">서비스의 예약, 이용 및 환불 등과 관련된 의무와</p>
+        <p class="mb-0 fw-bold text-primary">책임은 각 서비스 제공자에게 있으며, 건전플랫폼입니다.</p>
+        <p class="mb-0 fw-bold text-danger">업체 및 회원의 불법적 행위와 관련된 일체의 </p>
+        <p class="mb-2 fw-bold text-danger">민, 형사상 책임을 지지 않습니다. 그러니 건전한 문화를 지향 합시다.</p>
+        <p class="mb-0 ">서울특별시 동대문구 홍릉로3길 25 1층 11호</p>
+        <p class="mb-0 ">통신판매업신고 제 2022-서울동대문-0530호</p>
+        <p class="mb-0 ">상호 : 골드키위 | 사업자번호 : 671-25-02459</p>
+        <p class="mb-0 fw-bold text-success">고객센터 : 070-7642-9191</p>
+        <p class="mb-0 fw-bold text-success">이메일 : todak2018@naver.com</p>
+        <p class="mb-2 fw-bold text-success">평일 10:00~17:00 점심시간 12:00~13:30(공휴일 후무)</p>
+        <p class="mb-0 fw-bold">COPYRIGHT ⓒ 2018 토닥이친구<br/> LTD. All Rights Reserved.</p>
+    </div>
+</footer>
+ <!-- footer E-->
+</body>
+</html>

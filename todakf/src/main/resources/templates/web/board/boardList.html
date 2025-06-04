@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/web_layout}">
+
+
+<th:block layout:fragment="content">
+	<div class="border rounded text-center px-2 mt-2 mb-3"
+		style="background-color: #fafafa; font-size: 0.85rem; padding-top: 0.9rem; padding-bottom: 1.0rem;">
+		<div class="mb-2">
+			<a href="list?boardGubun=notice" class="mx-2 text-dark text-decoration-none" th:classappend="${param.boardGubun.contains('notice')} ? ' active' : ''">공지사항</a> |
+			<a href="list?boardGubun=free" class="mx-2 text-dark text-decoration-none" th:classappend="${param.boardGubun.contains('free')} ? ' active' : ''">자유게시판</a> |
+			<a href="list?boardGubun=qna"
+				class="me-2 text-dark text-decoration-none"
+				th:classappend="${param.boardGubun.contains('qna')} ? ' active' : ''">질문&답변</a>
+			| <a href="list?boardGubun=review"
+				class="mx-2 text-dark text-decoration-none"
+				th:classappend="${param.boardGubun.contains('review')} ? ' active' : ''">이용후기</a>
+			| <a href="list?boardGubun=review"
+				class="mx-2 text-dark text-decoration-none"
+				th:classappend="${param.boardGubun.contains('talk')} ? ' active' : ''">잡담</a>
+			| <a href="list?boardGubun=review"
+				class="mx-2 text-dark text-decoration-none"
+				th:classappend="${param.boardGubun.contains('together')} ? ' active' : ''">같이해요</a>
+
+		</div>
+	</div>
+
+	<div class="boards">
+		<div class="board">
+			<div class="board-header" style="justify-content: flex-end;">
+				<button class="btn btn-sm btn-primary" onclick="checkWrite()">
+					글쓰기</button>
+			</div>
+			<ul>
+				<li th:each="data,stat : ${list}">
+					<div class="post-title">
+						<span>
+							<!-- <span class="badge bg-primary">NEW</span> -->
+							<a href="#" th:text="${data.title}" th:onclick="'changeView(\'view\',\'' + ${data.boardSeq} + '\')'"></a>
+						</span>
+					</div>
+					<div class="post-meta">
+						<span class="author"
+							th:text="${data.nickname+' · '+data.createDt}"></span> <span
+							class="stats"
+							th:text="${'조회 '+data.searchCnt+' · 추천 '+data.likeCnt}"></span>
+					</div>
+				</li>
+				<li th:if="${#lists.isEmpty(list)}">
+					<span style="text-align:center">데이터가 없습니다.</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="text-center mt-4">
+		<ul class="pagination pagination-sm justify-content-center">
+			<li class="page-item disabled" th:if="${page.hasPrevBlock}"><a
+				class="page-link"
+				th:onclick="'goList(\'' + ${page.startBlock - 1} + '\')'">&laquo;</a>
+			</li>
+			<th:block th:if="${page.endBlock>0}">
+				<li class="page-item"
+					th:each="i : ${#numbers.sequence(page.startBlock, page.endBlock)}"
+					th:classappend="${i == page.page} ? 'active'"><a href="#"
+					class="page-link" th:onclick="'goList(\'' + ${i} + '\')'"
+					th:text="${i}">1</a></li>
+			</th:block>
+
+			<li class="page-item" th:if="${page.hasNextBlock}"><a
+				class="page-link" href="#"
+				th:onclick="'goList(\'' + ${page.endBlock + 1} + '\')'">&raquo;</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<form id="dataForm" method="post">
+<input type="hidden" name="page" id="page" th:value="${param.page}" />
+<input type="hidden" name="boardGubun" th:value="${param.boardGubun}">
+<input type="hidden" name="boardSeq" id="boardSeq" />
+</form>
+</th:block>
+<th:block layout:fragment="script">
+<script>
+function checkWrite(){
+    let isLoggedIn = [[${session.loginUser != null}]];
+    if (isLoggedIn) {
+    	changeView("/web/board/saveForm");
+    } else {
+        alert("로그인후 이용가능합니다.");
+    }
+}
+function changeView(val,id){
+	$("#boardSeq").val(id);
+	$("#dataForm").attr("action",val);
+	$("#dataForm").submit();
+}
+function goList(page){
+	$("#page").val(page);
+	$("#dataForm").attr("action","list");
+	$("#dataForm").submit();
+}
+ </script>
+</th:block>

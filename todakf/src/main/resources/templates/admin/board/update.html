@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+</th:block>
+<th:block layout:fragment="script">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script>
+$(document).ready(function() {
+	sido();
+	partner();
+    $('#summernote').summernote({
+    	height:150
+    });
+
+	$("#boardGubun").val("[[${data.boardGubun}]]");
+
+	$('#frm').on('submit', function (e) {
+	    e.preventDefault();
+
+	    const form = document.getElementById('frm');
+	    const formData = new FormData(form);
+	    $.ajax({
+            url: "/admin/board/save",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                alert("저장 성공!");
+                changeView("list");
+            },
+            error: function(response) {
+                alert(response.responseText);
+            }
+        });
+
+	});
+});
+function changeView(val){
+	$("#dataForm").attr("action",val);
+	$("#dataForm").submit();
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+<form id="dataForm">
+<input type="hidden" name="page" th:value="${param.page}">
+</form>
+<form id="frm" method="post">
+<input type="hidden" name="page" th:value="${param.page}">
+<input type="hidden" name="boardSeq" th:value="${data.boardSeq}">
+ <div id="view-write" >
+   <div class="card">
+     <div class="card-header">게시글 작성</div>
+     <div class="card-body">
+         <div class="mb-3">
+           <label for="title" class="form-label">제목</label>
+           <input type="text" class="form-control" name="title" th:value="${data.title}" required>
+         </div>
+         <div class="mb-3">
+           <label for="content" class="form-label">내용</label>
+           <textarea class="form-control" name="content" th:text="${data.content}"></textarea>
+         </div>
+         <button type="submit" class="btn btn-primary">수정</button>
+         <button type="button" class="btn btn-secondary" onclick="changeView('list')">취소</button>
+     </div>
+   </div>
+ </div>
+ </form>
+</th:block>

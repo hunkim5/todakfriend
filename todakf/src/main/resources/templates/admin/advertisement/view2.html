@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="script">
+<script>
+function changeView(val){
+	$("#dataForm").attr("action",val);
+	$("#dataForm").submit();
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+<form id="dataForm" method="post">
+<input type="hidden" name="page" th:value="${param.page}">
+<input type="hidden" name="advertisementNid" th:value="${param.advertisementNid}">
+<input type="hidden" name="searchTitle" th:value="${param.searchTitle}">
+<input type="hidden" name="searchPartner" th:value="${param.searchPartner}">
+<input type="hidden" name="searchSido" th:value="${param.searchSido}">
+</form>
+<input type="hidden" name="page" th:value="${param.page}">
+ <div id="board-view" >
+   <div class="card">
+     <div class="card-header">광고 보기</div>
+     <div class="data">
+         <div class="mb-3">
+           <label for="title" class="label">제목</label>
+           <div th:text="${data.title}" class="data"></div>
+         </div>
+         <div class="mb-3">
+           <label class="label">가게이미지</label>
+           <div class="data">
+           <span th:if="${data.stOrgFileName != null and #strings.trim(data.stOrgFileName).length() > 0}">
+	           	<img th:if="${data.stFilePath != null}" th:src="@{${data.stImgPath}}"/>
+	           	<br><a th:if="${data.stFilePath != null}" th:href="@{${data.stImgPath}}" th:text="${data.stOrgFileName}" download ></a>
+				<button type="button">삭제</button>
+			</span>
+           </div>
+         </div>
+         <div class="mb-3">
+           <label class="label">가입일</label>
+           <div th:text="${data.regDtm}" class="data"></div>
+         </div>
+         <div class="mb-3">
+           <label class="label">제휴기간(일)</label>
+           <div class="data" th:text="${data.licenseDay}"></div>
+         </div>
+         <div class="col-md-6">
+           <label class="label">카카오오픈챙팅주소</label>
+           <div class="data" th:text="${data.kakaoOpenChatUrl}"></div>
+         </div>
+         <div class="col-md-6">
+           <label class="label">가게 전화번호1</label>
+           <div class="data" th:text="${data.storePhoneNumber1}"></div>
+         </div>
+         <div class="col-md-6">
+           <label class="label">가게 전화번호2</label>
+           <div class="data" th:text="${data.storePhoneNumber2}"></div>
+         </div>
+         <div class="col-md-6">
+           <label class="label">가게 전화번호3</label>
+           <div class="data" th:text="${data.storePhoneNumber3}"></div>
+         </div>
+         <div class="mb-3">
+           <label class="label">제휴만료일</label>
+           <div class="data" th:text="${data.licenseDueDate}"></div>
+         </div>
+         <div class="mb-3">
+           <label class="label">파트너</label>
+             <div class="data" th:text="${data.partnerName}"></div>
+         </div>
+         <div class="mb-3">
+           <label class="label">지역</label>
+             <div class="data" th:text="${data.sido}"></div>
+         </div>
+         <div class="mb-3">
+           <label for="content" class="label">내용</label>
+           <div class="data" th:utext="${data.contentTop ?: ''}"></div>
+         </div>
+         <button type="button" class="btn btn-primary" onclick="changeView('updateForm')">수정</button>
+         <button type="button" class="btn btn-secondary" onclick="changeView('list')">돌아가기</button>
+     </div>
+   </div>
+ </div>
+</th:block>

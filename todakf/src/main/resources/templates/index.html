@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/web_layout}">
+
+
+<th:block layout:fragment="content">
+    <div class="section-header">
+      <h2>여성전용 마사지</h2>
+      <button class="more-btn" onclick="location.href='/web/permit/advertisement/list?advertisementGubun=message&webSearchSido=서울특별시,인천광역시,경기도'">더보기
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <line x1="12" y1="5" x2="19" y2="12"></line>
+          <line x1="12" y1="19" x2="19" y2="12"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="products">
+
+      <div class="product" th:each="data,stat : ${data.message}">
+        <div class="product-img-container">
+          <img th:src="${data.imgPath}" th:onclick="'changeView(\'/web/permit/advertisement/view\',\'' + ${data.advertisementNid} + '\')'" style="cursor: pointer;">
+        </div>
+        <h3 th:text="${data.storeName}"></h3>
+      </div>
+
+    </div>
+
+    <div class="boards">
+      <div class="board">
+        <div class="board-header">
+          <h3>자유게시판</h3>
+          <a href="/web/permit/board/list?boardGubun=free" class="more-link">더보기
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <line x1="12" y1="5" x2="19" y2="12"></line>
+              <line x1="12" y1="19" x2="19" y2="12"></line>
+            </svg>
+          </a>
+        </div>
+        <ul>
+          <li>
+            <div class="post-title">
+              <span>오늘 날씨가 좋아요</span>
+              <span>홍길동 · 05.15</span>
+            </div>
+            <div class="post-meta">
+		    	<span class="author">운영자 · 05.13</span>
+		    	<span class="stats">조회 254 · 추천 11</span>
+		  	</div>
+          </li>
+          <li>
+            <div class="post-title">
+              <span>다음주 모임 공지</span>
+              <span>김철수 · 05.14</span>
+            </div>
+            <div class="post-meta">
+		    	<span class="author">운영자 · 05.13</span>
+		    	<span class="stats">조회 254 · 추천 11</span>
+		  	</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="board">
+        <div class="board-header">
+          <h3>공지사항</h3>
+          <a href="/web/permit/service/list?boardGubun=notice" class="more-link">더보기
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <line x1="12" y1="5" x2="19" y2="12"></line>
+              <line x1="12" y1="19" x2="19" y2="12"></line>
+            </svg>
+          </a>
+        </div>
+        <ul>
+          <li>
+		  <div class="post-title">사이트 점검 안내 qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaxzzzzzzzzzzzzz</div>
+		  <div class="post-meta">
+		    <span class="author">운영자 · 05.13</span>
+		    <span class="stats">조회 254 · 추천 11</span>
+		  </div>
+		</li>
+
+          <li>
+            <div class="post-title">
+              <span>신상품 입고 안내</span>
+              <span>운영자 · 05.12</span>
+            </div>
+            <div class="post-meta">
+			    <span class="author">운영자 · 05.13</span>
+			    <span class="stats">조회 254 · 추천 11</span>
+			  </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+<form id="viewFrm" method="post">
+<input type="hidden" id="advertisementNid" name="advertisementNid" >
+</form>
+</th:block>
+<th:block layout:fragment="script">
+  <script>
+  function changeView(val,id){
+		$("#advertisementNid").val(id);
+		$("#viewFrm").attr("action",val);
+		$("#viewFrm").submit();
+	}
+  </script>
+</th:block>

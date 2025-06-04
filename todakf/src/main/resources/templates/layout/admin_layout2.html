@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>aaaaaaaaaTitle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Navbar 스타일 (작은 화면) */
+        .navbar {
+            background-color: #343a40;
+            color: white;
+        }
+        .navbar-brand {
+            color: white !important;
+        }
+        .navbar-toggler-icon {
+            background-color: white;
+        }
+        .nav-link {
+            color: white !important;
+        }
+        .nav-link:hover {
+            color: #f8f9fa !important;
+        }
+        /* Sidebar 스타일 (큰 화면) */
+        .sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            padding-top: 70px; /* Navbar 높이만큼 */
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            z-index: 1000; /* Navbar보다 아래 */
+        }
+        .sidebar .nav-link {
+            color: #343a40 !important;
+            padding: 10px 15px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+            color: #007bff !important;
+        }
+        .sidebar .nav-item ul.collapse {
+            padding-left: 15px;
+        }
+        .sidebar .nav-item ul.collapse li a {
+            padding: 8px 15px;
+        }
+        .main-content {
+            padding: 15px;
+            flex-grow: 1;
+            margin-top: 56px; /* Navbar 높이만큼 */
+            margin-left: 0; /* 작은 화면 */
+        }
+        /* 큰 화면에서 main-content margin 조정 */
+        @media (min-width: 768px) {
+            .main-content {
+                margin-left: 250px; /* Sidebar 너비만큼 */
+            }
+        }
+        /* 숨겨진 Sidebar (작은 화면) */
+        @media (max-width: 767.98px) {
+            .sidebar {
+                display: none;
+            }
+        }
+        .board-table {
+            width: 100%;
+            margin-top: 15px;
+        }
+        .board-table th, .board-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .board-table th {
+            background-color: #f8f9fa;
+        }
+        .board-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .pagination {
+            margin-top: 15px;
+            justify-content: center;
+        }
+        .write-button-container {
+		    display: flex;
+		    justify-content: flex-end;
+		    margin-bottom: 10px;
+		}
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="/js/common.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script> -->
+    <script>
+        $(document).ready(function() {
+            // 작은 화면에서 메뉴 토글 시 sidebar 보이기/숨기기 (선택 사항)
+            $('.navbar-toggler').on('click', function() {
+                $('.sidebar').toggleClass('d-none');
+                $('.main-content').toggleClass('ml-0 ml-md-3'); // main-content margin 조정
+            });
+        });
+    </script>
+    <!-- 각 페이지의 script가 작성될 위치 -->
+    <th:block layout:fragment="script"></th:block>
+    <!-- 각 페이지의 css가 작성될 위치 -->
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body>
+    <header th:replace="~{fragments/admin_sidebar::adminSidebar}"></header>
+    <main role="main" class="main-content" >
+    <th:block layout:fragment="content"></th:block>
+    </main>
+</body>
+</html>

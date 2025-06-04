@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="css">
+<style>
+   form {
+            margin-bottom: 20px;
+        }
+        .search-group {
+            margin-right: 10px;
+            display: inline-block;
+        }
+</style>
+</th:block>
+<th:block layout:fragment="script">
+<script>
+$(document).ready(function() {
+	partner();
+	sido();
+	$("#partner").val("[[${param.searchPartner}]]");
+	$("#sido").val("[[${param.searchSido}]]");
+});
+function changeView(val,id){
+	$("#boardSeq").val(id);
+	$("#searchFrm").attr("action",val);
+	$("#searchFrm").submit();
+}
+function goList(page){
+	$("#page").val(page);
+	$("#searchFrm").attr("action","list");
+	$("#searchFrm").submit();
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+<div id="view-list">
+        <div class="card">
+          <div class="card-header">
+            <span th:text="${param.boardTitle}"></span>
+            <button class="btn btn-sm btn-primary float-end" onclick="changeView('write')">글쓰기</button>
+          </div>
+          <div class="card-body">
+            <!-- 데스크탑 테이블 -->
+            <div class="table-responsive d-none d-md-block">
+		<form id="searchFrm" method="post" action="list">
+		<input type="hidden" name="page" id="page" th:value="${param.page}" />
+		<input type="hidden" name="boardGubun" th:value="${param.boardGubun}">
+		<input type="hidden" name="boardSeq" id="boardSeq" />
+	        <div class="search-group">
+	            <label>제목</label>
+	            <input type="text" name="searchTitle" th:value="${param.searchTitle}" >
+	        </div>
+	        <div class="search-group">
+	            <label>업체명:</label>
+	            <select id="partner" name="searchPartner">
+	            	<option value="">선택</option>
+	            </select>
+	        </div>
+	        <div class="search-group">
+	            <label>지역:</label>
+	            <select id="sido" name="searchSido">
+	            	<option value="">선택</option>
+	            </select>
+	        </div>
+	        <div class="search-group">
+	            <button type="submit" style="background-color: blue; color: white;">검색</button>
+	        </div>
+    	</form>
+              <table class="table table-bordered table-hover">
+              	<colgroup>
+					<col width="5%">
+					<col width="50%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+              	</colgroup>
+                <thead class="table-dark">
+                  <tr>
+                  	<th style="text-align: center;">No</th>
+	                <th style="text-align: center;">제목</th>
+	                <th style="text-align: center;">작성자</th>
+	                <th style="text-align: center;">조회수</th>
+	                <th style="text-align: center;">추천수</th>
+	                <th style="text-align: center;">등록일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  	<tr th:each="data,stat : ${list}">
+	                  	<td th:text="${stat.index+ (page.offset+1)}" style="text-align: center;"></td>
+	                  	<td><a href="#" th:text="${data.title}" th:onclick="'changeView(\'view\',\'' + ${data.boardSeq} + '\')'">첫 번째 게시글</a></td>
+	                  	<td th:text="${data.nickname}" style="text-align: center;">업체명</td>
+	                  	<td th:text="${data.searchCnt}" style="text-align: center;"></td>
+	                  	<td th:text="${data.likeCnt}" style="text-align: center;" >체휴기간</td>
+	                  	<td th:text="${data.createDt}" style="text-align: center;" ></td>
+	              	</tr>
+	              	<tr th:if="${#lists.isEmpty(list)}">
+			      		<td colspan="6" class="text-center">데이터가 없습니다.</td>
+			    	</tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 모바일 카드 리스트 -->
+            <div class="d-md-none">
+              <div class="card mb-2" th:each="data,stat : ${list}">
+                <div class="card-body" >
+                  <h5 class="card-title">
+                    <a href="#" th:text="${data.title}" th:onclick="'changeView(\'view\',\'' + ${data.boardSeq} + '\')'"></a>
+                  </h5>
+                  <p class="card-text text-muted">
+                  	작성자: <span th:text="${data.nickname}"></span><br>
+                  	조회수: <span th:text="${data.searchCnt}"></span><br>
+					추천수: <span th:text="${data.likeCnt}"></span><br>
+					등록일: <span th:text="${data.createDt}"></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 페이지네이션 (디자인 전용) -->
+            <nav>
+              <ul class="pagination justify-content-center mt-3">
+                <li class="page-item" th:if="${page.hasPrevBlock}">
+                  <a class="page-link" href="#" th:onclick="'goList(\'' + ${page.startBlock - 1} + '\')'">이전</a>
+                </li>
+
+				<th:block th:if="${page.endBlock>0}">
+                <li class="page-item" th:each="i : ${#numbers.sequence(page.startBlock, page.endBlock)}"
+            th:classappend="${i == page.page} ? 'active'">
+                	<span class="page-link">
+                		<a href="#" th:onclick="'goList(\'' + ${i} + '\')'" th:text="${i}"></a>
+                	</span>
+                </li>
+                </th:block>
+                <li class="page-item" th:if="${page.hasNextBlock}">
+                  <a class="page-link" href="#" th:onclick="'goList(\'' + ${page.endBlock + 1} + '\')'">다음</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+</th:block>

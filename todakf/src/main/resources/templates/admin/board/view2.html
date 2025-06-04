@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="script">
+<script>
+function changeView(val){
+	$("#dataForm").attr("action",val);
+	$("#dataForm").submit();
+}
+$(document).ready(function() {
+	$('#commentFrm').on('submit', function (e) {
+	    e.preventDefault();
+
+	    const form = document.getElementById('commentFrm');
+	    const formData = new FormData(form);
+	    $.ajax({
+	        url: "/admin/board/insertBoardComment",
+	        type: "POST",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        success: function(res) {
+	        	console.log(res);
+	            alert("저장 성공!");
+	            let html="";
+	            for(let i=0; i < res.length; i++){
+	            	html +="<li class='comment'>";
+	            	html +="<strong>"+res[i].nickname+"</strong>";
+	            	html +="<p>"+res[i].content.replace(/\n/g, '<br>')+"</p>";
+	            	html +="<div class='meta-info'>"+res[i].createDtm+"</div>";
+		            html +="</li>";
+	            }
+	            $('#commentList').html(html);
+	        },
+	        error: function(response) {
+	            alert(response.responseText);
+	        }
+	    });
+	}); //~ajax
+
+	$('#likeBtn').click(function () {
+	    let formData = $("#dataForm").serialize();
+		$.ajax({
+	        url: "/admin/board/updateLikeCnt",
+	        data : formData,
+	        type: "POST",
+	        success: function(res) {
+	        	console.log(">>>res:"+res);
+	        	if(res ==0){
+		        	let cnt = Number($("#likeCount").html());
+		        	$("#likeCount").html(cnt+1);
+	        	}else{
+	        		alert("이미 추천 하셨습니다.");
+	        	}
+	        },
+	        error: function(response) {
+	        }
+	    });
+	 });
+});
+</script>
+</th:block>
+<th:block layout:fragment="content">
+<form id="dataForm" method="post">
+<input type="hidden" name="page" th:value="${param.page}">
+<input type="hidden" name="boardGubun" th:value="${param.boardGubun}">
+<input type="hidden" name="boardSeq" th:value="${param.boardSeq}">
+<input type="hidden" name="uuid" th:value="${data.uuid}">
+<input type="hidden" name="searchTitle" th:value="${param.searchTitle}">
+<input type="hidden" name="searchPartner" th:value="${param.searchPartner}">
+<input type="hidden" name="searchSido" th:value="${param.searchSido}">
+</form>
+ <div id="board-view" >
+   <div class="card">
+     <div class="card-header">게시글 보기</div>
+     <div class="card-body">
+         <div class="mb-3">
+           <label for="title" class="label">제목</label>
+           <div th:text="${data.title}" class="data"></div>
+         </div>
+         <div class="mb-3">
+           <label class="label">필독여부</label>
+           <div th:text="${data.mustReadNm}" class="data"></div>
+         </div>
+         <div class="mb-3">
+           <label for="content" class="label">내용</label>
+           <div class="data" th:utext="${data.content ?: ''}"></div>
+         </div>
+         <button type="button" class="btn btn-primary" onclick="changeView('updateForm')">수정</button>
+         <button type="button" class="btn btn-secondary" onclick="changeView('list')">돌아가기</button>
+		<div class="mt-3 d-flex align-items-center gap-2">
+		  <button type="button" class="btn btn-outline-danger" id="likeBtn">❤️ 추천</button>
+		  <span id="likeCount" class="text-danger fw-bold" th:text="${data.likeCnt}"></span>
+		</div>
+      <!-- 댓글 영역 -->
+<div class="comments mt-5">
+  <h3>댓글</h3>
+
+  <!-- 댓글 입력 -->
+  <form id="commentFrm" th:action="@{/admin/board/insertBoardComment}" method="post">
+    <input type="hidden" name="boardSeq" th:value="${data.boardSeq}" />
+    <div class="">
+      <textarea name="content"  placeholder="댓글을 입력하세요" required></textarea>
+    </div>
+    <div class="text-end">
+      <button type="submit" class="btn btn-success">댓글 등록</button>
+    </div>
+  </form>
+
+  <!-- 댓글 목록 -->
+  <ul id="commentList">
+    <li class="comment" th:each="comment : ${commentList}">
+      <strong th:text="${comment.nickname}">작성자</strong>
+      <p th:utext="${#strings.replace(comment.content, nlString, '<br/>')}"></p>
+      <div class="meta-info" th:text="${comment.createDtm}">등록일</div>
+    </li>
+  </ul>
+</div>
+     </div>
+
+
+   </div>
+ </div>
+</th:block>

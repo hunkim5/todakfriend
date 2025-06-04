@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="script">
+<script>
+$(document).ready(function(){
+	$("#searchOption").val("[[${param.searchOption}]]");
+});
+function changeView(val,id){
+	$("#complainSeq").val(id);
+	$("#searchFrm").attr("action",val);
+	$("#searchFrm").submit();
+}
+function goList(page){
+	$("#page").val(page);
+	$("#searchFrm").attr("action","list");
+	$("#searchFrm").submit();
+}
+function updateBlindYn(blindYn,val){
+	// 폼 제출 전에 현재 스크롤 위치 저장
+    sessionStorage.setItem('scrollPosition', $(window).scrollTop());
+	let uuid = val.dataset.uuid;
+	let tablename = val.dataset.tablename;
+	let arr ={
+			uuid :uuid,
+			tableName : tablename,
+			blindYn : blindYn
+	}
+	$.ajax({
+        url: "/admin/complain/updateBlindYn",
+        type: "POST",
+        data: JSON.stringify(arr),
+        contentType : "application/json; charset=UTF-8",
+        success: function(response) {
+            alert("처리 되었습니다.");
+            location.reload();
+        },
+        error: function(response) {
+        	console.log(response.responseText);
+        }
+    });
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+	<div class="card-header">
+      <span th:text="${param.complainTitle}"></span>
+    </div>
+
+	<form id="searchFrm" method="post" action="list" class="mt-4 mb-3">
+	<input type="hidden" name="page" id="page" th:value="${param.page}" />
+	<input type="hidden" name="complainSeq" id="complainSeq" />
+
+	 <div class="d-flex flex-wrap justify-content-between align-items-center">
+	    <div class="d-flex flex-wrap gap-2 align-items-center">
+	      <select class="form-select form-select-sm" style="width: 120px;" name="searchOption" id="searchOption">
+	        <option value="">선택</option>
+	        <option value="nickname">신고자</option>
+	        <option value="targetNickname">신고된자</option>
+	        <option value="title">신고된글</option>
+	        <option value="content">신고내용</option>
+	      </select>
+	      <input type="text" class="form-control form-control-sm" placeholder="검색어 입력" style="width: 200px;" name="searchText" th:value="${param.searchText}">
+	      <button class="btn btn-sm btn-outline-secondary" type="submit">검색</button>
+	    </div>
+	  </div>
+
+	</form>
+
+	<table class="table table-hover mt-2 ">
+		<!-- <colgroup>
+			<col width="5%">
+			<col width="40%">
+			<col width="10%">
+			<col width="5%">
+			<col width="5%">
+			<col width="15%">
+		</colgroup> -->
+		<thead class="table-dark">
+			<tr>
+				<th>No</th>
+                <th>출처</th>
+                <th>신고된글</th>
+                <th>신고내용</th>
+                <th>신고자</th>
+                <th>신고된자</th>
+                <th>신고일</th>
+                <th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="data,stat : ${list}">
+				<td th:text="${stat.index+ (page.offset+1)}"></td>
+				<td th:text="${data.boardGubunName}" style="text-align: center;"></td>
+				<td th:text="${data.title}" >신고된글</td>
+				<td th:title="${data.content}" style="text-align:left;">
+					<p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 500px;">
+					  [[${data.content}]]
+					</p>
+				</td>
+				<td th:text="${data.nickname}" class="text-center">신고자</td>
+				<td th:text="${data.targetNickname}" >신고된자</td>
+				<td th:text="${#temporals.format(data.createDtm, 'yyyy-MM-dd HH:mm:ss')}" >신고일</td>
+				<td>
+					<th:block th:if="${data.blindYn==1}">
+						<button class="btn btn-danger btn-sm" type="button" th:data-uuid="${data.uuid}" th:data-tablename="${data.tableName}" onclick="updateBlindYn(0,this)">블라인드해제</button>
+					</th:block>
+					<th:block th:if="${data.blindYn==0}">
+						<button class="btn btn-primary btn-sm" type="button" th:data-uuid="${data.uuid}" th:data-tablename="${data.tableName}" onclick="updateBlindYn(1,this)">블라인드처리</button>
+					</th:block>
+				</td>
+			</tr>
+			<tr th:if="${#lists.isEmpty(list)}">
+				<td colspan="6" class="text-center">데이터가 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 🔹 페이징 -->
+	<nav class="d-flex justify-content-center mt-3">
+		<ul class="pagination pagination-sm">
+			<li class="page-item disabled" th:if="${page.hasPrevBlock}">
+				<a class="page-link" href="#" th:onclick="'goList(\'' + ${page.startBlock - 1} + '\')'">이전</a>
+			</li>
+			<th:block th:if="${page.endBlock>0}">
+				<li class="page-item " th:each="i : ${#numbers.sequence(page.startBlock, page.endBlock)}"
+            th:classappend="${i == page.page} ? 'active'">
+					<a class="page-link" href="#" th:onclick="'goList(\'' + ${i} + '\')'" th:text="${i}">1</a>
+				</li>
+			</th:block>
+			<li class="page-item" th:if="${page.hasNextBlock}">
+				<a class="page-link" href="#" th:onclick="'goList(\'' + ${page.endBlock + 1} + '\')'">다음</a>
+			</li>
+		</ul>
+	</nav>
+</th:block>

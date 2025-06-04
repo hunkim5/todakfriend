@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+</th:block>
+<th:block layout:fragment="script">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script>
+function changeView(val){
+	$("#frm").attr("action",val);
+	$("#frm").submit();
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+<form id="frm" method="post">
+<input type="hidden" name="page" th:value="${param.page}">
+<input type="hidden" name="searchPartnerName" th:value="${param.searchPartnerName}">
+<input type="hidden" name="partnerSeq" th:value="${param.partnerSeq}">
+ <div id="view-write" >
+   <div class="card">
+     <div class="card-header">파트너 상세보기</div>
+     <div class="text-end" >
+     		<button type="button" class="btn btn-primary" onclick="changeView('updateForm')">수정</button>
+        	<button type="button" class="btn btn-secondary" onclick="changeView('list')">돌아가기</button>
+       </div>
+     <table class="table table-bordered">
+	        <tr><th>
+	          <label for="partnerName" class="form-label">파트너명</label></th>
+	          <td colspan="3" th:text="${data.ceoName}" class="data"></div>
+	        </tr><tr><th>
+	          <label for="bankName" class="form-label">은행명</label></th>
+	          <td th:text="${data.bankName}" class="data"></td>
+	          <th><label for="accountNumber" class="form-label">계좌번호</label></th>
+	          <td th:text="${data.accountNumber}" class="data"></td>
+	        </tr><tr><th>
+	          <label for="ceoName" class="form-label">업체명</label></th>
+	          <td th:text="${data.partnerName}" class="data"></div>
+	          <th><label for="nationalIdNumber" class="form-label">주민등록번호</label></th>
+	          <td th:text="${data.nationalIdNumber}" class="data"></td>
+	        </tr><tr><th>
+	          <label for="addr" class="form-label">주소</label></th>
+	          <td th:text="${data.addr}" class="data"></div>
+	          <th><label for="phoneNumber" class="form-label">전화번호</label></th>
+	          <td th:text="${data.phoneNumber}" class="data"></div>
+	        </tr><tr><th>
+	          <label for="email" class="form-label">이메일</label></th>
+	          <td th:text="${data.email}" class="data"></div>
+	          <th><label for="companyNumber" class="form-label">사업자번호</label></th>
+	          <td th:text="${data.companyNumber}" class="data"></div>
+	        </tr>
+		</table>
+		광고
+		<table class="table table-bordered table-hover">
+              	<colgroup>
+					<col width="50%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+              	</colgroup>
+                <thead class="table-dark">
+                  <tr>
+	                <th style="text-align: center;">제목</th>
+	                <th style="text-align: center;">업체명</th>
+	                <th style="text-align: center;">가입일</th>
+	                <th style="text-align: center;">체휴기간</th>
+	                <th style="text-align: center;">체휴만료일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                	<tr th:each="data,stat : ${data.adList}">
+	                  <td><a href="#" th:text="${data.title}" th:onclick="'changeView(\'view\',\'' + ${data.advertisementNid} + '\')'">첫 번째 게시글</a></td>
+	                  <td th:text="${data.partnerName}" style="text-align: center;">업체명</td>
+	                  <td th:text="${data.regDtm}" style="text-align: center;"></td>
+	                  <td th:text="${data.licenseDay}" style="text-align: center;" >체휴기간</td>
+	                  <td th:text="${data.licenseDueDate}" style="text-align: center;" ></td>
+	              	</tr>
+	              	<tr th:if="${#lists.isEmpty(data.adList)}">
+			      		<td colspan="6" class="text-center">데이터가 없습니다.</td>
+			    	</tr>
+                </tbody>
+              </table>
+     </div>
+   </div>
+ </div>
+ </form>
+</th:block>

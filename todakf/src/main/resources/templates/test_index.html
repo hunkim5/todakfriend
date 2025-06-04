@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>갤러리 게시판</title>
+    <style>
+    body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 왼쪽 메뉴 (Sidebar) */
+.sidebar {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    width: 200px; /* 기본 너비 */
+    flex-shrink: 0; /* 줄어들지 않도록 */
+}
+
+.sidebar h1 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    display: block;
+    color: #eee;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* 탭 컨테이너 */
+.tab-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* 탭 버튼 */
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-buttons button {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: none;
+    background-color: #f9f9f9;
+    color: #555;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-buttons button.active {
+    background-color: #eee;
+    color: #333;
+}
+
+.tab-buttons button:hover {
+    background-color: #eee;
+}
+
+/* 탭 내용 */
+.tab-content {
+    padding: 15px;
+    display: none; /* 초기 숨김 */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 갤러리 */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px; /* 간격을 10px로 늘림 */
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* 정사각형 비율 유지 (선택 사항) */
+    object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+}
+
+/* 반응형 디자인 (모바일) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* 모바일에서는 세로 배치 */
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+        position: fixed; /* 화면 상단에 고정 */
+        top: 0;
+        left: 0;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar h1 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .sidebar ul li {
+        margin-bottom: 0;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .main-content {
+        padding-top: 60px; /* 고정된 메뉴 공간 확보 */
+    }
+
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* 더 작은 이미지 크기 */
+        gap: 1px; /* 더 촘촘한 간격 */
+    }
+
+    .tab-buttons {
+        overflow-x: auto; /* 탭 버튼 가로 스크롤 */
+    }
+
+    .tab-buttons button {
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+}
+
+/* 작은 모바일 화면 */
+@media (max-width: 480px) {
+    .sidebar ul {
+        font-size: 0.8em;
+    }
+
+    .tab-buttons button {
+        font-size: 0.8em;
+        padding: 8px 10px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+}
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabButtons = document.querySelectorAll('.tab-buttons button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function showTab(tabId) {
+            tabContents.forEach(content => content.classList.remove('active'));
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            const targetTab = document.getElementById(tabId);
+            const targetButton = document.querySelector(`.tab-buttons button[data-tab="${tabId}"]`);
+
+            if (targetTab && targetButton) {
+                targetTab.classList.add('active');
+                targetButton.classList.add('active');
+            }
+        }
+
+        // 초기 탭 설정 (URL 해시 또는 기본값)
+        const initialTab = window.location.hash ? window.location.hash.substring(1) : 'tab1';
+        showTab(initialTab);
+
+        // 탭 버튼 클릭 이벤트
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                showTab(tabId);
+                window.location.hash = tabId; // URL 해시 업데이트 (선택 사항)
+            });
+        });
+
+        // 왼쪽 메뉴 링크 클릭 시 탭 이동 (선택 사항)
+        const sidebarLinks = document.querySelectorAll('.sidebar a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabId = link.getAttribute('href').substring(1);
+                showTab(tabId);
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1>메뉴</h1>
+            <ul>
+                <li><a href="#tab1">최신 게시물</a></li>
+                <li><a href="#tab2">인기 게시물</a></li>
+                <li><a href="#tab3">자유 갤러리</a></li>
+                <li><a href="#tab4">공지사항</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button data-tab="tab1" class="active">최신</button>
+                    <button data-tab="tab2">인기</button>
+                    <button data-tab="tab3">자유</button>
+                    <button data-tab="tab4">공지</button>
+                </div>
+                <div id="tab1" class="tab-content active">
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/150/FF0000" alt="이미지 1">
+                            <div class="item-title">제목 1</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/150/00FF00" alt="이미지 2">
+                            <div class="item-title">제목 2</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/150/0000FF" alt="이미지 3">
+                            <div class="item-title">제목 3</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-content">
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/150/FFFF00" alt="이미지 4">
+                            <div class="item-title">제목 4</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/150/00FFFF" alt="이미지 5">
+                            <div class="item-title">제목 5</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab3" class="tab-content">
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/150/FF00FF" alt="이미지 6">
+                            <div class="item-title">제목 6</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab4" class="tab-content">
+                    <p>공지사항 내용</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
