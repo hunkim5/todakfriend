@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/web_layout}">
+
+<th:block layout:fragment="css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+</th:block>
+<th:block layout:fragment="content">
+<form method="post" id="saveForm" enctype="multipart/form-data">
+<input type="hidden" name="recruitSeq" th:value="${data.recruitSeq}">
+<input type="hidden" name="uuid" th:value="${data.uuid}">
+<div class="mt-5 p-4 bg-white rounded shadow-sm">
+  <h4 class="mb-4">구인 정보 입력</h4>
+    <div class="row g-3">
+      <!-- 업체명-->
+      <div class="col-md-4">
+        <label for="storeName" class="form-label">업체명</label>
+        <input type="text" class="form-control" id="storeName" name="storeName" placeholder="예: 스위트홈" th:value="${data.storeName}">
+      </div>
+      <!-- 급여형태 -->
+      <div class="col-md-4">
+        <label for="salaryType" class="form-label">급여 형태</label>
+        <select class="form-select" id="salaryType" name="salaryType">
+          <option value="consul">급여협의</option>
+          <option value="each">건당</option>
+          <option value="tc">T/C</option>
+        </select>
+      </div>
+
+      <!-- 급여 -->
+      <div class="col-md-4">
+        <label for="salary" class="form-label">급여</label>
+        <input type="text" class="form-control" id="salary" name="salary" placeholder="예: 150,000원" th:value="${data.salary}">
+      </div>
+
+      <!-- 연령 -->
+      <div class="col-md-4">
+        <label for="age" class="form-label">연령</label>
+        <input type="text" class="form-control" id="age" name="age" placeholder="예: 25세 ~ 35세" th:value="${data.age}">
+      </div>
+
+      <!-- 성별 -->
+      <div class="col-md-4">
+        <label for="sex" class="form-label">성별</label>
+        <select class="form-select" id="sex" name="sex">
+          <option value="male">남</option>
+          <option value="female">여</option>
+          <option value="both">무관</option>
+        </select>
+      </div>
+
+	   <div class="col-md-4">
+        <label for="companyType" class="form-label">업종</label>
+        <select class="form-select" id="companyType" name="companyType">
+          <option value="hoppa">호빠</option>
+          <option value="massage">마사지</option>
+          <option value="etc">기타구인</option>
+        </select>
+      </div>
+      <!-- 담당자 -->
+      <div class="col-md-4">
+        <label for="manager" class="form-label">담당자</label>
+        <input type="text" class="form-control" id="manager" name="manager" placeholder="예: 홍길동" th:value="${data.manager}">
+      </div>
+	  <div class="col-md-4">
+        <label for="location" class="form-label">지역 선택</label>
+        <select class="form-select" id="location" name="location">
+          <option value="서울특별시,인천광역시,경기도">서울특별시,인천광역시,경기도</option>
+          <option value="대전광역시,세종특별자치시,충청북도,충청남도">대전광역시,세종특별자치시,충청북도,충청남도</option>
+          <option value="대구광역시,경상북도">대구광역시,경상북도</option>
+          <option value="광주광역시,전라북도,전라남도">광주광역시,전라북도,전라남도</option>
+          <option value="부산광역시,울산광역시,경상남도">부산광역시,울산광역시,경상남도</option>
+          <option value="제주특별자치도,강원특별자치도">제주특별자치도,강원특별자치도</option>
+        </select>
+      </div>
+      <!-- 근무지역 -->
+      <div class="col-md-4">
+        <label for="addr" class="form-label">근무 지역</label>
+        <input type="text" class="form-control" id="addr" name="addr" placeholder="예: 서울 강남구" th:value="${data.addr}">
+      </div>
+
+      <!-- 연락처 -->
+      <div class="col-md-4">
+        <label for="phone" class="form-label">연락처</label>
+        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="예: 010-1234-5678" th:value="${data.phoneNumber}">
+      </div>
+
+      <!-- 카카오톡 -->
+      <div class="col-md-4">
+        <label for="kakao" class="form-label">카카오톡 ID</label>
+        <input type="text" class="form-control" id="kakao" name="kakao" placeholder="예: todakfriend" th:value="${data.kakao}">
+      </div>
+
+      <!-- 라인 -->
+      <div class="col-md-4">
+        <label for="line" class="form-label">라인 ID</label>
+        <input type="text" class="form-control" id="line" name="line" placeholder="예: todakline" th:value="${data.line}">
+      </div>
+	  <!-- 첨부파일 -->
+		<div class="col-12">
+	        <label for="attachment" class="form-label">업체 이미지</label>
+	        <input type="file" class="form-control" id="attachment" name="attachment" >
+	    </div>
+	    <!-- 업로드된 파일 표시 영역 -->
+	    <div class="col-12" th:if="${not #strings.isEmpty(data.filePath)}" id="fileArea">
+	        <div class="mt-2 border p-2 bg-light d-flex justify-content-between align-items-center" >
+	          <div>
+	            📎 <a th:href="@{${data.imgPath}}" th:text="${data.orgFileName}" download></a>
+	          </div>
+	          <button type="button" class="btn btn-sm btn-outline-danger" th:data-uuid="${data.uuid}" onclick="deleteFile(this)">삭제</button>
+	        </div>
+	    </div>
+      <!-- 모집내용 -->
+      <div class="col-12">
+        <label for="description" class="form-label">모집 내용</label>
+        <textarea class="form-control" id="summernote" name="content" rows="30" th:text="${data.content}" placeholder="부적절하거나 불쾌감을 줄 수 있는 컨텐츠는 제재를 받을 수 있습니다." required></textarea>
+      </div>
+    </div>
+
+    </div>
+    <!-- 제출 버튼 -->
+    <div class="text-end mt-4">
+      <button type="button" id="save" class="btn btn-primary">등록하기</button>
+      <button onclick="changeView('/web/permit/recruit/list')" class="btn btn-outline-secondary">
+         <i class="bi bi-arrow-left"></i>목록으로
+       </button>
+    </div>
+</form>
+</th:block>
+<th:block layout:fragment="script">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+<script>
+$(document).ready(function(){
+	let seq = "[[${data.recruitSeq}]]";
+	if(seq > 0){
+		$("#companyType").val("[[${data.companyType}]]");
+	}
+});
+function changeView(val){
+	$("#saveForm").attr("action",val);
+	$("#saveForm").submit();
+}
+
+$(document).ready(function() {
+	$('#summernote').summernote({
+    	height:400
+    });
+	$('#save').click(function (e) {
+	    e.preventDefault();
+
+	    const form = document.getElementById('saveForm');
+	    const formData = new FormData(form);
+	    $.ajax({
+            url: "/web/recruit/save",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                alert("저장 성공!");
+                changeView("/web/permit/recruit/list");
+            },
+            error: function(response) {
+                alert(response.responseText);
+            }
+        });
+	}); //~save
+});
+function deleteFile(val){
+	let uuid = val.dataset.uuid;
+	let arr ={
+			fileGroupUuid :uuid
+	}
+	$.ajax({
+        url: "/common/deleteFile",
+        type: "POST",
+        data: JSON.stringify(arr),
+        contentType : "application/json; charset=UTF-8",
+        success: function(response) {
+            alert("삭제되었습니다.");
+            $("#fileArea").html('');
+        },
+        error: function(response) {
+        	console.log(response.responseText);
+        }
+    });
+}
+</script>
+</th:block>

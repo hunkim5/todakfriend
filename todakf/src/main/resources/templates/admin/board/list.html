@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="script">
+<script>
+$(document).ready(function(){
+	$("#searchOption").val("[[${param.searchOption}]]");
+});
+function changeView(val,id){
+	$("#boardSeq").val(id);
+	$("#searchFrm").attr("action",val);
+	$("#searchFrm").submit();
+}
+function goList(page){
+	$("#page").val(page);
+	$("#searchFrm").attr("action","list");
+	$("#searchFrm").submit();
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+	<div class="card-header">
+      <span th:text="${param.boardTitle}"></span>
+    </div>
+
+	<form id="searchFrm" method="post" action="list" class="mt-4 mb-3">
+	<input type="hidden" name="page" id="page" th:value="${param.page}" />
+	<input type="hidden" name="boardGubun" th:value="${param.boardGubun}">
+	<input type="hidden" name="boardSeq" id="boardSeq" />
+	<input type="hidden" name="boardTitle" th:value="${param.boardTitle}"/>
+
+	 <div class="d-flex flex-wrap justify-content-between align-items-center">
+	    <div class="d-flex flex-wrap gap-2 align-items-center">
+	      <select class="form-select form-select-sm" style="width: 120px;" name="searchOption" id="searchOption">
+	        <option value="nickname">작성자</option>
+	        <option value="title">제목</option>
+	        <option value="content">내용</option>
+	      </select>
+	      <input type="text" class="form-control form-control-sm" placeholder="검색어 입력" style="width: 200px;" name="searchTitle" th:value="${param.searchTitle}">
+	      <button class="btn btn-sm btn-outline-secondary" type="submit">검색</button>
+	    </div>
+	    <button class="btn btn-primary btn-sm" type="button" onclick="changeView('write')">+ 글쓰기</button>
+	  </div>
+
+	</form>
+
+	<table class="table table-hover mt-2">
+		<colgroup>
+			<col width="5%">
+			<col width="40%">
+			<col width="10%">
+			<col width="5%">
+			<col width="5%">
+			<col width="15%">
+		</colgroup>
+		<thead class="table-dark">
+			<tr>
+				<th>No</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>추천수</th>
+                <th>등록일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="data,stat : ${list}">
+				<td th:text="${stat.index+ (page.offset+1)}"></td>
+				<td th:style="${data.blindYn} ? 'text-decoration: line-through;text-align:left;' : 'text-align:left;'">
+					<a href="#" th:text="${data.blindYn} ? ''+${data.adminTitle}+'(블라인드처리됨)':''+${data.adminTitle}+''" th:onclick="'changeView(\'view\',\'' + ${data.boardSeq} + '\')'"></a>
+				</td>
+				<!-- <td th:text="${data.blindYn} ? 'Y':''" style="text-align: center;"></td> -->
+				<td th:text="${data.nickname}" >업체명</td>
+				<td th:text="${data.searchCnt}" class="text-center"></td>
+				<td th:text="${data.likeCnt}" class="text-center"></td>
+				<td th:text="${#temporals.format(data.createDtm, 'yyyy-MM-dd HH:mm:ss')}" ></td>
+			</tr>
+			<tr th:if="${#lists.isEmpty(list)}">
+				<td colspan="6" class="text-center">데이터가 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 🔹 페이징 -->
+	<nav class="d-flex justify-content-center mt-3">
+		<ul class="pagination pagination-sm">
+			<li class="page-item disabled" th:if="${page.hasPrevBlock}">
+				<a class="page-link" href="#" th:onclick="'goList(\'' + ${page.startBlock - 1} + '\')'">이전</a>
+			</li>
+			<th:block th:if="${page.endBlock>0}">
+				<li class="page-item " th:each="i : ${#numbers.sequence(page.startBlock, page.endBlock)}"
+            th:classappend="${i == page.page} ? 'active'">
+					<a class="page-link" href="#" th:onclick="'goList(\'' + ${i} + '\')'" th:text="${i}">1</a>
+				</li>
+			</th:block>
+			<li class="page-item" th:if="${page.hasNextBlock}">
+				<a class="page-link" href="#" th:onclick="'goList(\'' + ${page.endBlock + 1} + '\')'">다음</a>
+			</li>
+		</ul>
+	</nav>
+</th:block>

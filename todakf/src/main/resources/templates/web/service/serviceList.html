@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/web_layout}">
+
+
+<th:block layout:fragment="content">
+<div class="border rounded text-center px-2 mt-2 mb-3"
+     style="background-color: #fafafa; font-size: 0.85rem; padding-top: 0.9rem; padding-bottom: 1.0rem;">
+  <div class="mb-2">
+    <a href="/web/permit/service/list?boardGubun=proposal" class="me-2 text-dark text-decoration-none" th:classappend="${param.boardGubun.contains('proposal')} ? ' active' : ''">건의&문의</a> |
+    <a href="/web/permit/faq/list?boardGubun=faq" class="me-2 text-dark text-decoration-none" th:classappend="${param.boardGubun.contains('faq')} ? ' active' : ''">자주묻는 질문</a> |
+    <a href="/web/permit/service/list?boardGubun=partner" class="mx-2 text-dark text-decoration-none" th:classappend="${param.boardGubun.contains('partner')} ? ' active' : ''">제휴문의</a> |
+    <a href="/web/permit/service/list?boardGubun=complain" class="mx-2 text-dark text-decoration-none" th:classappend="${param.boardGubun.contains('complain')} ? ' active' : ''">신고하기</a>
+  </div>
+</div>
+	<!-- <h4 th:text="${param.subTitle}"></h4> -->
+    <div class="boards">
+      <div class="board">
+        <div class="board-header" style="justify-content: flex-end;">
+        	<th:block th:if="${param.boardGubun.contains('proposal')}">
+        	<button class="btn btn-sm btn-primary" onclick="checkWrite()">
+		    문의하기
+			</button>
+			</th:block>
+			<th:block th:if="${param.boardGubun.contains('partner')}">
+        	<button class="btn btn-sm btn-primary" onclick="checkWrite()">
+		    제휴문의
+			</button>
+			</th:block>
+			<th:block th:if="${param.boardGubun.contains('complain')}">
+        	<button class="btn btn-sm btn-primary" onclick="checkWrite()">
+		    신고하기
+			</button>
+			</th:block>
+        </div>
+        <ul>
+          <li th:each="data,stat : ${list}">
+            <div class="post-title">
+              <span>
+              	<th:block th:if="${session.loginUser}">
+	              	<th:block th:if="${session.loginUser.userSeq==data.userSeq}">
+	              	<a href="#" th:text="${data.title}" th:onclick="'changeView(\'/web/service/view\',\'' + ${data.boardSeq} + '\')'"></a>
+	              	</th:block>
+	              	<th:block th:unless="${session.loginUser.userSeq==data.userSeq}">
+	              		<a href="#" th:text="${data.title}" onclick="alert('본인 글만 볼수 있습니다.')"></a>
+	              	</th:block>
+	              </th:block>
+	              <th:block th:unless="${session.loginUser}">
+	              	<a href="#" th:text="${data.title}" onclick="alert('로그인 사용자만 보실수 있습니다.')"></a>
+	              </th:block>
+              </span>
+              <span class="comment-icon" th:if="${data.commentCnt > 0}">
+		        <i class="bi bi-chat-dots"></i><span class="comment-count" th:text="${data.commentCnt}">12</span>
+		      </span>
+            </div>
+            <div class="post-meta">
+		    	<span class="stats" th:text="${#temporals.format(data.createDtm,'yyyy-MM-dd HH:mm:ss')}"></span>
+		  	</div>
+          </li>
+          <li th:if="${#lists.isEmpty(list)}">
+				<span style="text-align:center;">데이터가 없습니다.</span>
+		  </li>
+        </ul>
+      </div>
+    </div>
+
+<div class="text-center mt-4">
+  <ul class="pagination pagination-sm justify-content-center">
+    <li class="page-item disabled" th:if="${page.hasPrevBlock}">
+    	<a class="page-link" th:onclick="'goList(\'' + ${page.startBlock - 1} + '\')'">&laquo;</a>
+    </li>
+    <th:block th:if="${page.endBlock>0}">
+    <li class="page-item" th:each="i : ${#numbers.sequence(page.startBlock, page.endBlock)}" th:classappend="${i == page.page} ? 'active'">
+    	<a href="#" class="page-link" th:onclick="'goList(\'' + ${i} + '\')'" th:text="${i}">1</a>
+    </li>
+    </th:block>
+
+    <li class="page-item" th:if="${page.hasNextBlock}">
+    	<a class="page-link" href="#" th:onclick="'goList(\'' + ${page.endBlock + 1} + '\')'">&raquo;</a>
+    </li>
+  </ul>
+</div>
+
+
+<form id="dataForm" method="post">
+<input type="hidden" name="page" id="page" th:value="${param.page}" />
+<input type="hidden" name="boardGubun" th:value="${param.boardGubun}">
+<input type="hidden" name="boardSeq" id="boardSeq" />
+</form>
+</th:block>
+<th:block layout:fragment="script">
+<script>
+function checkWrite(){
+    let isLoggedIn = [[${session.loginUser != null}]];
+    if (isLoggedIn) {
+    	changeView("/web/service/saveForm");
+    } else {
+        alert("로그인후 이용가능합니다.");
+    }
+}
+function changeView(val,id){
+	$("#boardSeq").val(id);
+	$("#dataForm").attr("action",val);
+	$("#dataForm").submit();
+}
+function goList(page){
+	$("#page").val(page);
+	$("#dataForm").attr("action","list");
+	$("#dataForm").submit();
+}
+ </script>
+</th:block>

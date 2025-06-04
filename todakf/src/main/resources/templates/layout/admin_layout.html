@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토닥이친구 관리자 페이지</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+body {
+	background-color: #f8f9fa;
+	font-family: 'Arial', sans-serif;
+}
+
+/* 🔹 사이드바 (PC 전용) */
+.sidebar {
+	background-color: #343a40;
+	color: white;
+	width: 250px;
+	height: 100vh;
+	padding: 20px;
+	position: fixed;
+	overflow-y: auto; /* 세로 스크롤 허용 */
+}
+
+.sidebar a {
+	display: block;
+	padding: 10px;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+.sidebar a:hover {
+	background-color: #495057;
+}
+
+/* 🔹 콘텐츠 영역 */
+.content {
+	margin-left: 270px;
+	padding: 20px;
+}
+
+/* 🔹 모바일 반응형 */
+@media (max-width: 768px) {
+	.sidebar {
+		display: none;
+	}
+	.content {
+		margin-left: 0;
+		padding: 10px;
+	}
+
+	.navbar-collapse {
+		position: fixed;
+		top: 56px;
+		right: 0;
+		width: 80%;
+		max-height: 90vh;
+		background-color: #212529;
+		color: white;
+		padding: 1rem;
+		box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
+		border-radius: 0 0 8px 8px;
+		overflow-y: auto;
+		z-index: 1050;
+		transition: none !important;
+	}
+	.navbar-collapse .nav-link {
+		color: #fff !important;
+		font-size: 1rem;
+		margin-bottom: 0.8rem;
+	}
+	.navbar-collapse.collapse:not(.show) {
+		display: none !important;
+	}
+}
+
+/* 🔹 테이블 스타일 개선 */
+.table th, .table td {
+	border: 1px solid #dee2e6 !important;
+	text-align: center;
+}
+
+.table thead th {
+	background-color: #343a40;
+	color: white;
+}
+
+/* 🔹 긴 텍스트 생략 (...) */
+.text-truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<th:block layout:fragment="css"></th:block>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="/js/common.js"></script>
+<th:block layout:fragment="script"></th:block>
+</head>
+<body>
+    <!-- 🔹 PC에서는 왼쪽 사이드바 유지 -->
+    <nav class="sidebar d-flex flex-column d-none d-md-block">
+        <h4 class="text-center mb-4">관리자 메뉴</h4>
+
+        <a href="/index">홈페이지</a>
+        <a href="/admin/dashboard/index">대시보드</a>
+
+        <!-- 🔹 2depth 메뉴 - 사용자 관리 -->
+        <a href="#" data-bs-toggle="collapse" data-bs-target="#userMenu">사용자 관리 ▼</a>
+        <div id="userMenu" class="collapse">
+            <a href="/user/list" class="ps-4">가입된 사용자</a>
+            <a href="/admin/partner/list" class="ps-4">파트너 관리</a>
+        </div>
+
+		<!-- 🔹 2depth 메뉴 - 게시판 관리 -->
+        <a href="#" data-bs-toggle="collapse" data-bs-target="#partnerMenu">파트너 광고 ▼</a>
+        <div id="partnerMenu" class="collapse">
+            <a href="/admin/advertisement/list?adType=N" class="ps-4">광고등록</a>
+            <a href="/admin/advertisement/list?adType=E" class="ps-4">이벤트등록</a>
+        </div>
+
+        <!-- 🔹 2depth 메뉴 - 게시판 관리 -->
+        <a href="#" data-bs-toggle="collapse" data-bs-target="#boardMenu">커뮤니티 관리 ▼</a>
+        <div id="boardMenu" class="collapse">
+            <a href="#" class="ps-4" onclick="boardList('free','자유게시판')">자유 게시판</a>
+            <a href="#" class="ps-4" onclick="boardList('qna','질문&답변')">질문&답변</a>
+            <a href="#" class="ps-4" onclick="boardList('review','이용후기')">이용후기</a>
+            <a href="#" class="ps-4" onclick="boardList('junior','토린이')">토린이</a>
+            <a href="#" class="ps-4" onclick="boardList('talk','잡담')">잡담</a>
+            <a href="#" class="ps-4" onclick="boardList('together','같이해요')">같이해요</a>
+        </div>
+
+        <!-- 🔹 2depth 메뉴 - 게시판 관리 -->
+        <a href="#" data-bs-toggle="collapse" data-bs-target="#counselMenu">고객센터 ▼</a>
+        <div id="counselMenu" class="collapse">
+        	<a href="#" class="ps-4" onclick="boardList('notice','공지사항')">공지사항</a>
+            <a href="#" class="ps-4" onclick="boardList('proposal','건의 및 문의')">건의 및 문의</a>
+            <a href="#" class="ps-4" onclick="boardList('faq','자주 묻는 질문')">자주 묻는 질문</a>
+            <a href="#" class="ps-4" onclick="boardList('partner','제휴문의')">제휴문의</a>
+            <a href="/admin/complain/list" class="ps-4">신고된글</a>
+        </div>
+
+        <a href="#">로그아웃</a>
+    </nav>
+
+    <!-- 🔹 모바일에서 보이는 네비게이션 바 (햄버거 메뉴) -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark d-md-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">관리자 페이지</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#">대시보드</a></li>
+
+                    <!-- 🔹 2depth 메뉴 - 사용자 관리 -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#mobileUserMenu">사용자 관리 ▼</a>
+                        <div id="mobileUserMenu" class="collapse ps-3">
+                            <a href="#" class="nav-link">가입된 사용자</a>
+                            <a href="#" class="nav-link">권한 설정</a>
+                        </div>
+                    </li>
+
+                    <!-- 🔹 2depth 메뉴 - 게시판 관리 -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#mobileBoardMenu">게시판 관리 ▼</a>
+                        <div id="mobileBoardMenu" class="collapse ps-3">
+                            <a href="#" class="nav-link">공지사항</a>
+                            <a href="#" class="nav-link">자유 게시판</a>
+                            <a href="#" class="nav-link">Q&A</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#">로그아웃</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🔹 반응형 콘텐츠 -->
+    <div class="content">
+    <th:block layout:fragment="content"></th:block>
+    </div>
+
+<form id="menuForm" method="post" action="/admin/board/list">
+<input type="hidden" name="boardGubun" id="boardGubun"/>
+<input type="hidden" name="boardTitle" id="boardTitle"/>
+</form>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+  	//페이지 로드 시 스크롤 위치 복원
+	if (sessionStorage.getItem('scrollPosition')) {
+	   $(window).scrollTop(sessionStorage.getItem('scrollPosition'));
+	   sessionStorage.removeItem('scrollPosition'); // 사용 후 제거
+	}
+    document.addEventListener("click", function(event) {
+        let navbar = document.getElementById("navbarNav");
+        let button = document.querySelector(".navbar-toggler");
+
+        if (window.innerWidth < 768 && !navbar.contains(event.target) && !button.contains(event.target)) {
+            let bsCollapse = bootstrap.Collapse.getInstance(navbar);
+            if (bsCollapse) bsCollapse.hide();
+        }
+    });
+    function boardList(board_gubun,title){
+    	$("#boardTitle").val(title);
+    	$("#boardGubun").val(board_gubun);
+    	$("#menuForm").submit();
+    }
+</script>
+</body>
+</html>

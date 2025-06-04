@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko"
+		xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/admin_layout}">
+
+<th:block layout:fragment="script">
+<script>
+function changeView(val){
+	$("#dataForm").attr("action",val);
+	$("#dataForm").submit();
+}
+$(document).ready(function() {
+	$('#commentFrm').on('submit', function (e) {
+		sessionStorage.setItem('scrollPosition', $(window).scrollTop());
+	    e.preventDefault();
+
+	    const form = document.getElementById('commentFrm');
+	    const formData = new FormData(form);
+	    $.ajax({
+	        url: "/admin/board/insertBoardComment",
+	        type: "POST",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        success: function(res) {
+	        	console.log(res);
+	            alert("저장 성공!");
+	            location.reload();
+	        },
+	        error: function(response) {
+	            alert(response.responseText);
+	        }
+	    });
+	}); //~ajax
+
+	$('#likeBtn').click(function () {
+	    let formData = $("#dataForm").serialize();
+		$.ajax({
+	        url: "/admin/board/updateLikeCnt",
+	        data : formData,
+	        type: "POST",
+	        success: function(res) {
+	        	console.log(">>>res:"+res);
+	        	if(res ==0){
+		        	let cnt = Number($("#likeCount").html());
+		        	$("#likeCount").html(cnt+1);
+	        	}else{
+	        		alert("이미 추천 하셨습니다.");
+	        	}
+	        },
+	        error: function(response) {
+	        }
+	    });
+	 });
+});
+function replyComment(commentSeq,val){
+	let replyBox = $(val).closest('#commentList').find('.reply-box');
+	if(replyBox.length == 0){
+		$("#parentSeq").val(commentSeq);
+		const replyHtml = `
+		    <div class="reply-box mt-2">
+		      <textarea class="form-control mb-2" rows="2" placeholder="답글을 입력하세요..." id="commentReplyContent"></textarea>
+		      <div class="d-flex justify-content-end">
+		        <button class="btn btn-sm btn-primary me-2" onclick="commentReply()">등록</button>
+		        <button class="btn btn-sm btn-outline-secondary" onclick="replyComment(this);">취소</button>
+		      </div>
+		    </div>
+		  `;
+		  $(val).closest('div').append(replyHtml);
+	}else{
+		replyBox.remove();
+	}
+}
+function commentReply() {
+	// 폼 제출 전에 현재 스크롤 위치 저장
+    sessionStorage.setItem('scrollPosition', $(window).scrollTop());
+
+	let formData = $("#dataForm").serialize();
+	formData += "&content="+$("#commentReplyContent").val();
+	$.ajax({
+        url: "/web/insertBoardComment",
+        data : formData,
+        type: "POST",
+        success: function(res) {
+			location.reload();
+        },
+        error: function(response) {
+        }
+    });
+}
+function deleteComment(seq){
+	if(!confirm("삭제 하시겠습니까?"))return;
+	$.ajax({
+        url: "/admin/board/deleteBoardComment",
+        data : "commentSeq="+seq,
+        type: "POST",
+        success: function(res) {
+        	location.reload();
+        },
+        error: function(response) {
+        }
+    });
+}
+function updateBlind(blindYn){
+	// 폼 제출 전에 현재 스크롤 위치 저장
+    sessionStorage.setItem('scrollPosition', $(window).scrollTop());
+
+	let message = "블라인드 처리 하시겠습니까?";
+	if(blindYn){
+		message = "블라인드 처리 해제 하시겠습니까?";
+		blindYn=0;
+	}else{
+		blindYn=1;
+	}
+	if(!confirm(message))return;
+	$.ajax({
+        url: "/admin/board/updateBlind",
+        data : "blindYn="+blindYn+"&boardSeq="+$("#boardSeq").val(),
+        type: "POST",
+        success: function(res) {
+        	location.reload();
+        },
+        error: function(response) {
+        }
+    });
+}
+function updateCommentBlind(seq,blindYn){
+	// 폼 제출 전에 현재 스크롤 위치 저장
+    sessionStorage.setItem('scrollPosition', $(window).scrollTop());
+
+	let message = "블라인드 처리 하시겠습니까?";
+	if(blindYn){
+		message = "블라인드 처리 해제 하시겠습니까?";
+		blindYn=0;
+	}else{
+		blindYn=1;
+	}
+	if(!confirm(message))return;
+	$.ajax({
+        url: "/admin/board/updateCommentBlind",
+        data : "blindYn="+blindYn+"&commentSeq="+seq,
+        type: "POST",
+        success: function(res) {
+        	location.reload();
+        },
+        error: function(response) {
+        }
+    });
+}
+</script>
+</th:block>
+<th:block layout:fragment="content">
+<form id="dataForm" method="post">
+<input type="hidden" name="page" th:value="${param.page}">
+<input type="hidden" name="boardGubun" th:value="${param.boardGubun}">
+<input type="hidden" name="boardSeq" id="boardSeq" th:value="${param.boardSeq}">
+<input type="hidden" name="uuid" th:value="${data.uuid}">
+<input type="hidden" name="searchOption" th:value="${param.searchOption}">
+<input type="hidden" name="searchTitle" th:value="${param.searchTitle}">
+<input type="hidden" name="parentSeq" id="parentSeq" >
+<input type="hidden" name="boardTitle" th:value="${param.boardTitle}"/>
+</form>
+	<div class="card p-4">
+		<h5 th:text="${data.title}">📌 시스템 점검 안내</h5>
+		<p class="text-muted">
+			작성자: <th:block th:text="${data.nickname}">관리자</th:block> | 작성일: <th:block th:text="${#temporals.format(data.createDtm, 'yyyy-MM-dd HH:mm:ss')}"></th:block> | <i class="bi bi-eye"></i> 조회수: <th:block th:text="${data.searchCnt}"></th:block>
+		</p>
+		<hr>
+		<p th:utext="${data.content ?: ''}">🚀 시스템 점검이 2025년 5월 27일 오전 3시부터 진행됩니다.</p>
+
+		<!-- 🔹 게시글 하단 버튼 영역 -->
+		<div class="mt-4 d-flex gap-2 justify-content-end">
+			<button class="btn btn-outline-secondary btn-sm" onclick="changeView('list')">← 목록으로</button>
+			<button class="btn btn-warning btn-sm" onclick="changeView('updateForm')">✏️ 수정</button>
+			<button class="btn btn-warning btn-sm" th:onclick="'updateBlind('+${data.blindYn}+')'" th:text="${data.blindYn}?'블라인드해제':'블아인드처리'"></button>
+			<button class="btn btn-outline-primary btn-sm" id="likeBtn">
+				👍 추천 <span class="badge bg-primary ms-1" th:text="${data.likeCnt}" id="likeCount">12</span>
+			</button>
+		</div>
+	</div>
+
+	<div class="mt-4">
+		<form id="commentFrm" th:action="@{/admin/board/insertBoardComment}" method="post">
+		<input type="hidden" name="boardSeq" th:value="${data.boardSeq}" />
+		<h4>💬 댓글</h4>
+		<div class="card p-3 mb-3">
+			<input type="text" class="form-control mb-2" placeholder="댓글 입력" name="content">
+			<button class="btn btn-secondary btn-sm">등록</button>
+		</div>
+		</form>
+		<!-- 댓글 목록 -->
+		<div class="comment-thread" id="commentList">
+			<!-- 공통 템플릿: 댓글과 대댓글 동일 구조, depth에 따라 ms-* 조절 -->
+			<div class="comment-item p-3 border rounded mb-2" th:each="comment : ${commentList}" th:style="'margin-left: ' + ${comment.depth * 10} + 'px;'" th:classappend="${comment.depth>0} ? 'bg-white' : 'bg-light'">
+				<div class="fw-bold">
+					<span th:text="${comment.depth>0}? |⤷${comment.nickname}| : |👤 ${comment.nickname}|">홍길동</span>
+					<span class="text-muted small">(2025-05-26)</span>
+				</div>
+				<div class="mt-1" th:utext="${comment.blindYn} ? ''+${comment.adminContent}+'(블라인드처리됨)':''+${comment.adminContent}+''" th:style="${comment.blindYn} ? 'text-decoration: line-through;' : ''">감사합니다!</div>
+				<div class="comment-actions">
+					<button class="btn btn-sm btn-link text-primary px-2" title="답글" th:onclick="'replyComment(' + ${comment.commentSeq} + ',this)'" type="button">
+						<i class="bi bi-reply"></i>
+					</button>
+					<button class="btn btn-sm btn-link text-danger px-2" title="삭제" th:onclick="'deleteComment(' + ${comment.commentSeq} + ')'" >
+						<i class="bi bi-x-circle"></i>
+					</button>
+					<button class="btn btn-sm btn-link text-danger px-2" title="블라인드" th:onclick="'updateCommentBlind(' + ${comment.commentSeq} + ',' + ${comment.blindYn} + ')'">
+						<i class="bi-eye-slash">블라인드</i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
